@@ -9,8 +9,8 @@ package group
 
 import (
 	"errors"
-	
-	"github.com/dobyte/tencent-im/internal/entity"
+
+	"github.com/DanPlayer/tencent-im/internal/entity"
 )
 
 var (

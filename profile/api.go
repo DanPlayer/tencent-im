@@ -8,9 +8,9 @@
 package profile
 
 import (
-	"github.com/dobyte/tencent-im/internal/core"
-	"github.com/dobyte/tencent-im/internal/enum"
-	"github.com/dobyte/tencent-im/internal/types"
+	"github.com/DanPlayer/tencent-im/internal/core"
+	"github.com/DanPlayer/tencent-im/internal/enum"
+	"github.com/DanPlayer/tencent-im/internal/types"
 )
 
 const (

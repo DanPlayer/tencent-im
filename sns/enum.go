@@ -7,7 +7,7 @@
 
 package sns
 
-import "github.com/dobyte/tencent-im/internal/enum"
+import "github.com/DanPlayer/tencent-im/internal/enum"
 
 type (
 	// AddType 添加类型

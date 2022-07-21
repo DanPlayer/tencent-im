@@ -8,7 +8,7 @@
 package push
 
 import (
-    "github.com/dobyte/tencent-im/internal/enum"
+	"github.com/DanPlayer/tencent-im/internal/enum"
 )
 
 const (

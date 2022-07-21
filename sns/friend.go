@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/dobyte/tencent-im/internal/entity"
+	"github.com/DanPlayer/tencent-im/internal/entity"
 )
 
 var (
