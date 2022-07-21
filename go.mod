@@ -1,4 +1,4 @@
-module github.com/dobyte/tencent-im
+module github.com/DanPlayer/tencent-im
 
 go 1.16
 
