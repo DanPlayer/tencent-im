@@ -41,8 +41,8 @@ const (
 
 func NewIM() im.IM {
 	return im.NewIM(&im.Options{
-		AppId:      1400564830,
-		AppSecret:  "0d2a321b087fdb8fd5ed5ea14fe0489139086eb1b03541774fc9feeab8f2bfd3",
+		AppId:      1400698387,
+		AppSecret:  "",
 		UserId:     "administrator",
 		Expiration: 3600,
 	})
@@ -1506,6 +1506,19 @@ func TestIm_RecentContact_DeleteSession(t *testing.T) {
 	err := NewIM().RecentContact().DeleteSession(assistant, test1, recentcontact.SessionTypeC2C, true)
 	if err != nil {
 		handleError(t, "recentcontact.DeleteSession", err)
+	}
+	t.Log("Success")
+}
+
+func TestIm_UpdateGroupInfo(t *testing.T) {
+	g := group.NewGroup()
+	g.SetGroupId("@TGS#2MYBSWSIP")
+	g.SetIntroduction("测试群1简介")
+
+	err := NewIM().Group().UpdateGroup(g)
+	if err != nil {
+		handleError(t, "group.UpdateGroup", err)
+		return
 	}
 	t.Log("Success")
 }
