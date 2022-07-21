@@ -624,9 +624,9 @@ func (a *api) PullMembers(arg *PullMembersArg, fn func(ret *FetchMembersRet)) (e
 // 点击查看详细文档:
 // https://cloud.tencent.com/document/product/269/1620
 func (a *api) UpdateGroup(group *Group) (err error) {
-	if err = group.checkUpdateError(); err != nil {
-		return
-	}
+	//if err = group.checkUpdateError(); err != nil {
+	//	return
+	//}
 
 	req := &updateGroupReq{}
 	req.GroupId = group.id
