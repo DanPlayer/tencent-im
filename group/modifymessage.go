@@ -12,10 +12,11 @@ type ModifyMessage struct {
 	customData interface{}      // 自定义数据
 }
 
-func (m *ModifyMessage) NewModify(id, key string) *ModifyMessage {
-	m.id = id
-	m.msgSeq = key
-	return m
+func NewModify(id, seq string) *ModifyMessage {
+	return &ModifyMessage{
+		id:     id,
+		msgSeq: seq,
+	}
 }
 
 func (m *ModifyMessage) SetID(id string) {

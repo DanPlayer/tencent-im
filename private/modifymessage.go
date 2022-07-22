@@ -13,11 +13,12 @@ type ModifyMessage struct {
 	customData interface{}      // 自定义数据
 }
 
-func (m *ModifyMessage) NewModify(sender, receiver, key string) *ModifyMessage {
-	m.sender = sender
-	m.receiver = receiver
-	m.msgKey = key
-	return m
+func NewModify(sender, receiver, key string) *ModifyMessage {
+	return &ModifyMessage{
+		sender:   sender,
+		receiver: receiver,
+		msgKey:   key,
+	}
 }
 
 func (m *ModifyMessage) SetSender(userId string) {
