@@ -42,6 +42,7 @@ const (
 	commandDeleteGroupMsgBySender      = "delete_group_msg_by_sender"
 	commandGetGroupSimpleMsg           = "group_msg_get_simple"
 	commandGetOnlineMemberNum          = "get_online_member_num"
+	commandModifyGroupMsg              = "modify_group_msg"
 
 	batchGetGroupsLimit = 50 // 批量获取群组限制
 )
@@ -252,6 +253,11 @@ type API interface {
 	// 点击查看详细文档:
 	// https://cloud.tencent.com/document/product/269/49180
 	GetOnlineMemberNum(groupId string) (num int, err error)
+
+	// ModifyMsg 修改群聊历史消息
+	// 点击查看详细文档:
+	// https://cloud.tencent.com/document/product/269/74741
+	ModifyMsg(modify *ModifyMessage) error
 }
 
 type api struct {
@@ -1309,4 +1315,25 @@ func (a *api) GetOnlineMemberNum(groupId string) (num int, err error) {
 	num = resp.OnlineMemberNum
 
 	return
+}
+
+// ModifyMsg 修改群聊历史消息
+// 管理员修改群聊历史消息
+// 可以单独修改消息中的 MsgBody 或 CloudCustomData 字段，也可以同时修改这两个字段。以请求中指定的字段值覆盖历史消息对应的字段。
+// 不支持修改直播群的历史消息
+// 点击查看详细文档:
+// https://cloud.tencent.com/document/product/269/74741
+func (a *api) ModifyMsg(modify *ModifyMessage) error {
+	req := &ModifyMsgReq{}
+
+	req.GroupId = modify.GetID()
+	req.MsgSeq = modify.GetMsgSeq()
+	req.CloudCustomData = conv.String(modify.GetCustomData())
+	req.MsgBody = modify.GetBody()
+
+	if err := a.client.Post(serviceGroup, commandModifyGroupMsg, req, &types.ActionBaseResp{}); err != nil {
+		return err
+	}
+
+	return nil
 }

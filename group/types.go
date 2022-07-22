@@ -505,4 +505,12 @@ type (
 		types.ActionBaseResp
 		OnlineMemberNum int `json:"OnlineMemberNum"` // 该群组的在线人数
 	}
+
+	// ModifyMsgReq 修改历史消息（请求）
+	ModifyMsgReq struct {
+		GroupId         string           `json:"GroupId"`         // 消息发送方 UserID（必填）
+		MsgSeq          string           `json:"MsgSeq"`          // 待修改消息的唯一标识。获取消息 MsgKey 的方法请参见本接口的接口说明（必填）
+		MsgBody         []*types.MsgBody `json:"MsgBody"`         // 消息内容，具体格式请参考 消息格式描述（注意，一条消息可包括多种消息元素，MsgBody 为 Array 类型）
+		CloudCustomData string           `json:"CloudCustomData"` // 消息自定义数据（云端保存，会发送到对端，程序卸载重装后还能拉取到）
+	}
 )

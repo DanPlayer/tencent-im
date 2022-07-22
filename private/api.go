@@ -22,6 +22,7 @@ const (
 	commandRevokeMessage       = "admin_msgwithdraw"
 	commandSetMessageRead      = "admin_set_msg_read"
 	commandGetUnreadMessageNum = "get_c2c_unread_msg_num"
+	commandModifyMsg           = "modify_c2c_msg"
 )
 
 type API interface {
@@ -105,6 +106,11 @@ type API interface {
 	// 点击查看详细文档:
 	// https://cloud.tencent.com/document/product/269/56043
 	GetUnreadMessageNum(userId string, peerUserIds ...string) (ret *GetUnreadMessageNumRet, err error)
+
+	// ModifyMsg 修改单聊历史消息
+	// 点击查看详细文档:
+	// https://cloud.tencent.com/document/product/269/74740
+	ModifyMsg(modify *ModifyMessage) error
 }
 
 type api struct {
@@ -351,4 +357,29 @@ func (a *api) GetUnreadMessageNum(userId string, peerUserIds ...string) (ret *Ge
 	}
 
 	return
+}
+
+// ModifyMsg 修改单聊历史消息
+// 管理员修改单聊历史消息。
+//	可以单独修改消息中的 MsgBody 或 CloudCustomData 字段，也可以同时修改这两个字段。以请求中指定的字段值覆盖历史消息对应的字段。
+//	待修改的单聊消息的 MsgKey 可通过以下方式获取：
+//		开启 发单聊消息之前回调 或 发单聊消息之后回调，通过该回调接口记录每条单聊消息的 MsgKey 。
+//		通过 查询单聊消息 查询出待修改的单聊消息的 MsgKey 。
+//		通过 REST API 单发单聊消息 和 批量发单聊消息 接口发出的单聊消息，回包里会返回消息的 MsgKey 。
+// 点击查看详细文档:
+// https://cloud.tencent.com/document/product/269/74740
+func (a *api) ModifyMsg(modify *ModifyMessage) error {
+	req := &ModifyMsgReq{}
+
+	req.FromAccount = modify.GetSender()
+	req.ToAccount = modify.GetReceiver()
+	req.MsgKey = modify.GetMsgKey()
+	req.CloudCustomData = conv.String(modify.GetCustomData())
+	req.MsgBody = modify.GetBody()
+
+	if err := a.client.Post(service, commandModifyMsg, req, &types.ActionBaseResp{}); err != nil {
+		return err
+	}
+
+	return nil
 }

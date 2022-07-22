@@ -167,7 +167,7 @@ type (
 		UnreadMsgNum int    `json:"C2CUnreadMsgNum"` // 该单聊会话的未读数
 	}
 
-	// 查询错误项
+	// UnreadMessageError 查询错误项
 	UnreadMessageError struct {
 		UserId    string `json:"Peer_Account"` // 查询错误的目标UserId
 		ErrorCode int    `json:"ErrorCode"`    // 查询错误的错误码。若目标帐号的错误码为70107表示该帐号不存在
@@ -178,6 +178,15 @@ type (
 		Total   int                   // 单聊消息总未读数
 		Results map[string]int        // 未读消息数列表
 		Errors  []*UnreadMessageError // 错误消息列表
+	}
+
+	// ModifyMsgReq 修改历史消息（请求）
+	ModifyMsgReq struct {
+		FromAccount     string           `json:"From_Account"`    // 消息发送方 UserID（必填）
+		ToAccount       string           `json:"To_Account"`      // 消息接收方 UserID（必填）
+		MsgKey          string           `json:"MsgKey"`          // 待修改消息的唯一标识。获取消息 MsgKey 的方法请参见本接口的接口说明（必填）
+		MsgBody         []*types.MsgBody `json:"MsgBody"`         // 消息内容，具体格式请参考 消息格式描述（注意，一条消息可包括多种消息元素，MsgBody 为 Array 类型）
+		CloudCustomData string           `json:"CloudCustomData"` // 消息自定义数据（云端保存，会发送到对端，程序卸载重装后还能拉取到）
 	}
 
 	ImageInfo          = types.ImageInfo
